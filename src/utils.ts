@@ -6,7 +6,7 @@ export const getActiveLineNumbers = (editor?: TextEditor): number[] => {
   }
 
   const lineNumbers = editor.selections.map(
-    (selection) => selection.active.line
+    (selection) => selection.active.line + 1
   );
   return lineNumbers;
 };
@@ -14,11 +14,11 @@ export const getActiveLineNumbers = (editor?: TextEditor): number[] => {
 export const copyLineNumbersToClipBoard = (
   clipboard: Clipboard,
   lineNumbers: number[]
-): void => {
+): Thenable<void> | null => {
   if (!lineNumbers || lineNumbers.length === 0) {
-    return;
+    return null;
   }
 
   const lineNumbersAsString = lineNumbers.join('\n');
-  clipboard.writeText(lineNumbersAsString);
+  return clipboard.writeText(lineNumbersAsString);
 };
