@@ -6,6 +6,7 @@ import { stub } from 'sinon';
 import {
   copyLineNumbersToClipBoard,
   getActiveLineNumbers,
+  insertLineNumbers,
 } from '../../../utils';
 
 suite('unit/utils.ts', () => {
@@ -80,6 +81,76 @@ suite('unit/utils.ts', () => {
     assert(
       writeTextStub.calledWith(expectedCopyText),
       'copyLineNumbersToClipBoard_novalidlinenumbers_nothingcopied writeTextStub.notCalled failed'
+    );
+  });
+
+  // export const insertLineNumbers = (editor?: TextEditor) => {
+  //   if (!editor) {
+  //     return;
+  //   }
+
+  //   const selections = editor.selections;
+  //   editor.edit((editBuilder) => {
+  //     selections.forEach((selection) => {
+  //       editBuilder.insert(selection.active, selection.active.line.toString());
+  //     });
+  //   });
+  // };
+
+  test('insertLineNumbers_editorObjectNotValid_shouldReturn', () => {
+    const editStub = stub<
+      [
+        callback: (editBuilder: {
+          insert: (position: unknown, text: string) => void;
+        }) => void
+      ],
+      Thenable<boolean>
+    >();
+    const editor = {
+      edit: editStub,
+    } as unknown as TextEditor;
+
+    insertLineNumbers(editor);
+    assert(
+      editStub.notCalled,
+      'insertLineNumbers_editorObjectNotValid_shouldReturn editStub.notCalled failed'
+    );
+  });
+
+  test('insertLineNumbers_editorObjectValid_shouldbecalled_onceperselection', () => {
+    const editStub = stub<
+      [
+        callback: (editBuilder: {
+          insert: (position: unknown, text: string) => void;
+        }) => void
+      ],
+      Thenable<boolean>
+    >();
+    const editor = {
+      edit: editStub,
+      selections: [
+        {
+          active: {
+            line: 1,
+          },
+        },
+        {
+          active: {
+            line: 2,
+          },
+        },
+        {
+          active: {
+            line: 3,
+          },
+        },
+      ],
+    } as unknown as TextEditor;
+
+    insertLineNumbers(editor);
+    assert(
+      editStub.calledThrice,
+      'insertLineNumbers_editorObjectValid_shouldbecalled_onceperselection editStub.calledThrice failed'
     );
   });
 });

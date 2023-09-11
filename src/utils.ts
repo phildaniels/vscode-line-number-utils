@@ -22,3 +22,16 @@ export const copyLineNumbersToClipBoard = (
   const lineNumbersAsString = lineNumbers.join('\n');
   return clipboard.writeText(lineNumbersAsString);
 };
+
+export const insertLineNumbers = (editor?: TextEditor) => {
+  if (!editor || !editor.selections || editor.selections.length === 0) {
+    return;
+  }
+
+  const selections = editor.selections;
+  editor.edit((editBuilder) => {
+    selections.forEach((selection) => {
+      editBuilder.insert(selection.active, selection.active.line.toString());
+    });
+  });
+};
