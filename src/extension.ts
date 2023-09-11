@@ -1,19 +1,25 @@
-import { type ExtensionContext, commands, window } from "vscode";
+import { type ExtensionContext, commands, window } from 'vscode';
 
-export function activate(context: ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "vscode-line-number-utils" is now active!'
-  );
+export const activate = (context: ExtensionContext) => {
+  console.log('"vscode-line-number-utils" is now active!');
   let disposable = commands.registerCommand(
-    "vscode-line-number-utils.helloWorld",
-    () => {
-      window.showInformationMessage(
-        "Hello World from vscode-line-number-utils!"
-      );
-    }
+    'vscode-line-number-utils.copy-line-numbers-at-cursor(s)-to-clipboard',
+    () => {}
   );
 
   context.subscriptions.push(disposable);
-}
+};
 
-export function deactivate() {}
+export const getActiveLineNumbers = () => {
+  const editor = window.activeTextEditor;
+  if (!editor) {
+    return [];
+  }
+
+  const lineNumbers = editor.selections.map(
+    (selection) => selection.active.line
+  );
+  return lineNumbers;
+};
+
+export const deactivate = () => {};

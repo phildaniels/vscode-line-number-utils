@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-line-number-utils.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-line-number-utils.copy-line-number(s)-at-cursor(s)-to-clipboard",
+        "title": "Line Number Utils: Copy Line Number(s) at Cursor(s) to Clipboard"
       }
     ]
   },
