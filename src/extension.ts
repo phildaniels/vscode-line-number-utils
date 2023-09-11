@@ -2,13 +2,13 @@ import { type ExtensionContext, commands, window } from "vscode";
 
 export function activate(context: ExtensionContext) {
   console.log(
-    'Congratulations, your extension "vscode-type-preview-shortener" is now active!'
+    'Congratulations, your extension "vscode-line-number-utils" is now active!'
   );
   let disposable = commands.registerCommand(
-    "vscode-type-preview-shortener.helloWorld",
+    "vscode-line-number-utils.helloWorld",
     () => {
       window.showInformationMessage(
-        "Hello World from vscode-type-preview-shortener!"
+        "Hello World from vscode-line-number-utils!"
       );
     }
   );
