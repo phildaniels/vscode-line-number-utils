@@ -1,6 +1,6 @@
 {
-  "name": "vscode-type-preview-shortener",
-  "displayName": "vscode-type-preview-shortener",
+  "name": "vscode-line-number-utils",
+  "displayName": "vscode-line-number-utils",
   "description": "Shortens preview windows in vscode with very long type names",
   "version": "0.0.1",
   "engines": {
@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-type-preview-shortener.helloWorld",
+        "command": "vscode-line-number-utils.helloWorld",
         "title": "Hello World"
       }
     ]
