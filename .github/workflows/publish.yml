@@ -1,0 +1,62 @@
+name: Build, Test, and Publish VSCode Extension
+on:
+  push:
+    branches:
+      - main 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the extension
+        run: npm run vscode:prepublish
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Run Pre Test
+        run: npm run pretest
+      - name: Run tests
+        run: npm test
+
+  publish:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Publish to VSCode Marketplace
+        env:
+          VSCE_PUBLISHER_TOKEN: ${{ secrets.VSCE_PUBLISHER_TOKEN }}
+        run: npm run vsce-package -- -p $VSCE_PUBLISHER_TOKEN
+      - name: Publish to VSCode Marketplace
+        env:
+          VSCE_PUBLISHER_TOKEN: ${{ secrets.VSCE_PUBLISHER_TOKEN }}
+        run: npm run vsce-publish -- -p $VSCE_PUBLISHER_TOKEN
+# Make sure to add your GitHub and npm tokens as secrets in your repository
