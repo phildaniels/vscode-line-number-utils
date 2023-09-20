@@ -21,6 +21,18 @@
         "command": "vscode-line-number-utils.insert-line-number(s)-at-cursor(s)",
         "title": "Line Number Utils: Insert Line Number(s) at Cursor(s)"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "vscode-line-number-utils.copy-line-number(s)-at-cursor(s)-to-clipboard",
+        "key": "ctrl+shift+alt+c",
+        "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
+      },
+      {
+        "command": "vscode-line-number-utils.insert-line-number(s)-at-cursor(s)",
+        "key": "ctrl+shift+alt+i",
+        "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
+      }
     ]
   },
   "scripts": {

@@ -1,13 +1,8 @@
+import { type ExtensionContext, commands, env, window } from 'vscode';
+
 import {
-  type ExtensionContext,
-  commands,
-  window,
-  env,
-  type TextEditor,
-} from 'vscode';
-import {
-  getActiveLineNumbers,
   copyLineNumbersToClipBoard,
+  getActiveLineNumbers,
   insertLineNumbers,
 } from './utils';
 
@@ -37,7 +32,6 @@ export const activate = (context: ExtensionContext) => {
   let insertLineNumbersAtCursors = commands.registerCommand(
     'vscode-line-number-utils.insert-line-number(s)-at-cursor(s)',
     async () => {
-      const lineNumbers = getActiveLineNumbers(window.activeTextEditor);
       if ((window.activeTextEditor?.selections?.length ?? 0) === 0) {
         window.showInformationMessage(
           'No active cursors. Please select some text.'
