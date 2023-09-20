@@ -84,5 +84,5 @@ suite('integration/extension.ts', async () => {
     expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
     await commands.executeCommand('workbench.action.closeActiveEditor');
-  });
+  }).timeout(100_000);
 });

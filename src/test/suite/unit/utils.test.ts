@@ -1,7 +1,7 @@
 import { type Clipboard, type TextEditor, Selection } from 'vscode';
 
 import { assert, expect } from 'chai';
-import { stub } from 'sinon';
+import { match, stub } from 'sinon';
 
 import {
   type ExecuteCommand,
@@ -125,42 +125,46 @@ suite('unit/utils.ts', () => {
     expect(insertStub.callCount).to.equal(3);
   });
 
-  // test('insertCursorsAtWord_editorObjectNotValid_shouldReturn', () => {
-  //   const executeCommandStub = stub<
-  //     [command: string, ...rest: unknown[]],
-  //     Thenable<unknown>
-  //   >();
-  //   const editor = {} as unknown as TextEditor;
+  test('insertCursorsAtWord_editorObjectNotValid_shouldReturn', async () => {
+    const executeCommandStub = stub<
+      [command: string, ...rest: unknown[]],
+      Thenable<unknown>
+    >();
+    const editor = undefined as unknown as TextEditor;
 
-  //   insertCursorsAtWord(
-  //     editor,
-  //     executeCommandStub as unknown as ExecuteCommand,
-  //     'console'
-  //   );
-  //   assert(
-  //     executeCommandStub.notCalled,
-  //     'insertCursorsAtWord_editorObjectNotValid_shouldReturn executeCommandStub.notCalled failed'
-  //   );
-  // });
-  // test('insertCursorsAtWord_editorObjectValid_shouldbecalled_onceperselection', () => {
-  //   const executeCommandStub = stub<
-  //     [command: string, ...rest: unknown[]],
-  //     Thenable<unknown>
-  //   >();
-  //   const editor = {
-  //     document: {
-  //       getText: () =>
-  //         "console.log(`hello`);\n\nconsole.log(`world`);\n\nconsole.log(`it's me`);",
-  //       positionAt: (_: number) => ({ line: Math.random() }),
-  //     },
-  //     selections: [],
-  //   } as unknown as TextEditor;
+    await insertCursorsAtWord(
+      editor,
+      executeCommandStub as unknown as ExecuteCommand,
+      'console'
+    );
+    assert(
+      executeCommandStub.notCalled,
+      'insertCursorsAtWord_editorObjectNotValid_shouldReturn executeCommandStub.notCalled failed'
+    );
+  });
+  test('insertCursorsAtWord_editorObjectValid_shouldbecalled_onceperselection', async () => {
+    const executeCommandStub = stub<
+      [command: string, ...rest: unknown[]],
+      Thenable<unknown>
+    >().resolves();
+    let text =
+      '"usestrict";console.log(`hello`);console.log(`world`);console.log(`it\'sme`);//#sourceMappingURL=testFile.js.map';
+    const editor = {
+      document: {
+        getText: () => text,
+        positionAt: (_: number) => ({
+          line: 0,
+          character: Math.floor(Math.random() * text.length - 1),
+        }),
+      },
+      selections: [],
+    } as unknown as TextEditor;
 
-  //   insertCursorsAtWord(
-  //     editor,
-  //     executeCommandStub as unknown as ExecuteCommand,
-  //     'console'
-  //   );
-  //   expect(executeCommandStub.callCount).to.equal(3);
-  // });
+    await insertCursorsAtWord(
+      editor,
+      executeCommandStub as unknown as ExecuteCommand,
+      'console'
+    );
+    expect(executeCommandStub.callCount).to.equal(4);
+  });
 });
