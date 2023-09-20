@@ -1,11 +1,13 @@
-import { type TextEditor, type Selection, type Clipboard } from 'vscode';
+import { type Clipboard, type TextEditor, Selection } from 'vscode';
 
 import { assert, expect } from 'chai';
-
 import { stub } from 'sinon';
+
 import {
+  type ExecuteCommand,
   copyLineNumbersToClipBoard,
   getActiveLineNumbers,
+  insertCursorsAtWord,
   insertLineNumbers,
 } from '../../../utils';
 
@@ -27,9 +29,8 @@ suite('unit/utils.ts', () => {
 
     expect(editorSelectionsLengthIsZeroResult).to.deep.equal([]);
   });
-
   test('getActiveLineNumbers_editorObjectHasValidSelections_shouldReturn_expectedSelections', () => {
-    const expected = [1, 2, 3];
+    const expected = [2, 3, 4];
     const firstSelection = {
       active: {
         line: 1,
@@ -84,19 +85,6 @@ suite('unit/utils.ts', () => {
     );
   });
 
-  // export const insertLineNumbers = (editor?: TextEditor) => {
-  //   if (!editor) {
-  //     return;
-  //   }
-
-  //   const selections = editor.selections;
-  //   editor.edit((editBuilder) => {
-  //     selections.forEach((selection) => {
-  //       editBuilder.insert(selection.active, selection.active.line.toString());
-  //     });
-  //   });
-  // };
-
   test('insertLineNumbers_editorObjectNotValid_shouldReturn', () => {
     const editStub = stub<
       [
@@ -116,41 +104,63 @@ suite('unit/utils.ts', () => {
       'insertLineNumbers_editorObjectNotValid_shouldReturn editStub.notCalled failed'
     );
   });
-
   test('insertLineNumbers_editorObjectValid_shouldbecalled_onceperselection', () => {
-    const editStub = stub<
-      [
-        callback: (editBuilder: {
-          insert: (position: unknown, text: string) => void;
-        }) => void
-      ],
-      Thenable<boolean>
-    >();
-    const editor = {
-      edit: editStub,
-      selections: [
-        {
-          active: {
-            line: 1,
-          },
-        },
-        {
-          active: {
-            line: 2,
-          },
-        },
-        {
-          active: {
-            line: 3,
-          },
-        },
-      ],
-    } as unknown as TextEditor;
+    const insertStub = stub();
 
-    insertLineNumbers(editor);
-    assert(
-      editStub.calledThrice,
-      'insertLineNumbers_editorObjectValid_shouldbecalled_onceperselection editStub.calledThrice failed'
-    );
+    const edit = (callback: (editBuilder: TextEditor) => void) => {
+      callback({ insert: insertStub } as unknown as TextEditor);
+    };
+
+    const editor = {
+      selections: [
+        new Selection(0, 0, 0, 0),
+        new Selection(1, 0, 1, 0),
+        new Selection(2, 0, 2, 0),
+      ],
+      edit,
+    };
+
+    insertLineNumbers(editor as unknown as TextEditor);
+
+    expect(insertStub.callCount).to.equal(3);
   });
+
+  // test('insertCursorsAtWord_editorObjectNotValid_shouldReturn', () => {
+  //   const executeCommandStub = stub<
+  //     [command: string, ...rest: unknown[]],
+  //     Thenable<unknown>
+  //   >();
+  //   const editor = {} as unknown as TextEditor;
+
+  //   insertCursorsAtWord(
+  //     editor,
+  //     executeCommandStub as unknown as ExecuteCommand,
+  //     'console'
+  //   );
+  //   assert(
+  //     executeCommandStub.notCalled,
+  //     'insertCursorsAtWord_editorObjectNotValid_shouldReturn executeCommandStub.notCalled failed'
+  //   );
+  // });
+  // test('insertCursorsAtWord_editorObjectValid_shouldbecalled_onceperselection', () => {
+  //   const executeCommandStub = stub<
+  //     [command: string, ...rest: unknown[]],
+  //     Thenable<unknown>
+  //   >();
+  //   const editor = {
+  //     document: {
+  //       getText: () =>
+  //         "console.log(`hello`);\n\nconsole.log(`world`);\n\nconsole.log(`it's me`);",
+  //       positionAt: (_: number) => ({ line: Math.random() }),
+  //     },
+  //     selections: [],
+  //   } as unknown as TextEditor;
+
+  //   insertCursorsAtWord(
+  //     editor,
+  //     executeCommandStub as unknown as ExecuteCommand,
+  //     'console'
+  //   );
+  //   expect(executeCommandStub.callCount).to.equal(3);
+  // });
 });
