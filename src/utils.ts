@@ -36,7 +36,10 @@ export const insertLineNumbers = (editor?: TextEditor) => {
   const selections = editor.selections;
   editor.edit((editBuilder) => {
     selections.forEach((selection) => {
-      editBuilder.insert(selection.active, selection.active.line.toString());
+      editBuilder.insert(
+        selection.active,
+        (selection.active.line + 1).toString()
+      );
     });
   });
 };
@@ -57,13 +60,8 @@ export const insertCursorsAtWord = async (
   const regex = new RegExp(word, 'g');
   let match;
 
-  await executeCommand('editor.action.selectAll');
-  await executeCommand('cursorMove', {
-    to: 'wrappedLineStart',
-    by: 'wrappedLine',
-    value: -editor.selection.active,
-  });
-
+  await executeCommand('cursorTop');
+  editor.selections = [];
   while ((match = regex.exec(text))) {
     const position = document.positionAt(match.index);
     const selection = new Selection(position, position);

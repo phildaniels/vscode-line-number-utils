@@ -31,7 +31,7 @@ export const activate = (context: ExtensionContext) => {
 
   let insertLineNumbersAtCursors = commands.registerCommand(
     'vscode-line-number-utils.insert-line-number(s)-at-cursor(s)',
-    async () => {
+    () => {
       if ((window.activeTextEditor?.selections?.length ?? 0) === 0) {
         window.showInformationMessage(
           'No active cursors. Please select some text.'
