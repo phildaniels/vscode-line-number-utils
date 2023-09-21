@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=PhilDanielsIO.vscode-line-number-utils">
-    <img alt="Icon Logo" src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/icons/icon.png" width="110">
+    <img alt="Icon Logo" src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/assets/icon.png" width="110">
   </a>
   <div style="font-size: 25px" align="center">VSCode Line Number Utils</h1>
 </div>
@@ -18,20 +18,26 @@
   &nbsp;&nbsp;
   <!-- rating -->
   <a href="https://marketplace.visualstudio.com/items?itemName=PhilDanielsIO.vscode-line-number-utils">
-    <img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/PhilDanielsIO.vscode-line-number-utils.svg?maxAge=86400&style=for-the-badge&labelColor=000000&color=957fb7">
+    <img alt="rating" src="https://img.shields.io/visual-studio-marketplace/stars/PhilDanielsIO.vscode-line-number-utils.svg?maxAge=3600&style=for-the-badge&labelColor=000000&color=957fb7">
   </a>
 </div>
 </br>
 <div align="center">
   <img
-    src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/images/screenshot.png"
+    src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/assets/showcase.png"
     role="presentation"
-		alt="Screenshot of theme"
+		alt="Showcase of extension"
   />
 </div>
 </br>
 
-Utilities for inserting and copying line numbers during single and multi-cursor editing
+Utilities for inserting and copying line numbers during single and multi-cursor editing. Similar utility to extensions like "Turbo Console Log" but more general and works for general editing
+
+Currently there are two commands:
+
+1. **Line Number Utils: Copy Line Number(s) at Cursor(s) to Clipboard**: Mapped to `ctrl+shift+alt+c`. Will take the line number at the cursor(s) and copy to the system clipboard
+
+2. **Line Number Utils: Insert Line Number(s) at Cursor(s)**: Mapped to `ctrl+shift+alt+i`. Will take the line number at the cursor(s) insert the corresponding number(s) at the cursor(s)
 
 ## License
 
