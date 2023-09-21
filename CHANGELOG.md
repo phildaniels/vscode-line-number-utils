@@ -10,7 +10,7 @@ Format is based on [Keep a Changelog](http://keepachangelog.com/), and this proj
 
 ## [0.7.0] - 2023-09-21
 
-- Work on README
+- More Work on README
 
 ## [0.6.0] - 2023-09-21
 
