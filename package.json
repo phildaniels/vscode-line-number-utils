@@ -2,7 +2,7 @@
   "name": "vscode-line-number-utils",
   "displayName": "VScode Line Number Utils",
   "description": "Inserts / Copies line number(s) under cursor",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "publisher": "PhilDanielsIO",
   "repository": {
     "type": "git",
