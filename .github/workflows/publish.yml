@@ -40,7 +40,7 @@ jobs:
   #       with:
   #         run: npm test
   publish:
-    needs: [build, test]
+    # needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
