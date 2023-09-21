@@ -51,7 +51,10 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "vsce-package": "vsce package",
-    "vsce-publish": "vsce publish -p $VSCE_PUBLISHER_TOKEN"
+    "vsce-publish:minor": "vsce publish minor",
+    "vsce-publish:ci:minor": "vsce publish minor -p $VSCE_PUBLISHER_TOKEN",
+    "vsce-publish:major": "vsce publish major",
+    "vsce-publish:ci:major": "vsce publish major -p $VSCE_PUBLISHER_TOKEN"
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",
