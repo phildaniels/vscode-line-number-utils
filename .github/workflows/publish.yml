@@ -57,4 +57,3 @@ jobs:
         env:
           VSCE_PUBLISHER_TOKEN: ${{ secrets.VSCE_PUBLISHER_TOKEN }}
         run: npm run vsce-publish-minor -- -p $VSCE_PUBLISHER_TOKEN
-# Make sure to add your GitHub and npm tokens as secrets in your repository
