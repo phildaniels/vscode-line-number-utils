@@ -1,7 +1,7 @@
 name: Build, Test, and Publish VSCode Extension
 on:
   workflow_run:
-    workflows: ['Bump Minor Version']
+    workflows: ['Bump Minor Version', 'Bump Major Version']
     types:
       - completed
 jobs:

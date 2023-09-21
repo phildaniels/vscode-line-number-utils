@@ -7,24 +7,42 @@ jobs:
   version:
     runs-on: ubuntu-latest
     steps:
+      - name: Check Previous Workflow
+        id: previous_workflow
+        run: |
+          echo "::set-output name=previous_workflow::$(curl -s -H \"Authorization: token ${{ secrets.GITHUB_TOKEN }}\" https://api.github.com/repos/${{ github.repository }}/actions/runs?event=push | jq -r '.workflow_runs[1].name')"
+      - name: Check if Previous Workflow was "Bump Major Version"
+        id: is_major_version
+        run: |
+          if [[ "${{ steps.previous_workflow.outputs.previous_workflow }}" == "Bump Major Version" ]]; then
+            echo "::set-output name=is_major_version::false"
+          else
+            echo "::set-output name=is_major_version::true"
+          fi
       - name: Checkout code
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         uses: actions/checkout@v4
       - name: Set up Node.js
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         uses: actions/setup-node@v3.8.1
         with:
           node-version: lts/*
       - name: Install dependencies
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         run: npm ci
       - name: Set Git Config
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         run: |
           git config user.name "Phil Daniels"
           git config user.email "phil@danielsdev.cloud"
       - name: Set Git Credentials
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         run: |
           git config --global credential.helper store
           git remote set-url origin https://github.com/${{ github.repository }}.git
           git fetch
       - name: Run npm version minor
+        if: steps.is_major_version.outputs.is_major_version == 'false'
         run: |
           git pull
           npm version minor
