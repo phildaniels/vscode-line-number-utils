@@ -35,11 +35,10 @@ jobs:
         run: npm install
       - name: Run Pre Test
         run: npm run pretest
-      - name: Run tests
-        run: npm test
-        env:
-          DISPLAY: ':99.0'
-
+      - name: Run Tests
+        uses: GabrielBB/xvfb-action@v1.6
+        with:
+          run: npm test
   publish:
     needs: [build, test]
     runs-on: ubuntu-latest
