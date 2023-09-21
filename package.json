@@ -26,6 +26,14 @@
       {
         "command": "vscode-line-number-utils.insert-line-number(s)-at-cursor(s)",
         "title": "Line Number Utils: Insert Line Number(s) at Cursor(s)"
+      },
+      {
+        "command": "vscode-line-number-utils.insert-sequential-line-number(s)-at-cursor(s)",
+        "title": "Line Number Utils: Insert Sequential Line Number(s) at Cursor(s)"
+      },
+      {
+        "command": "vscode-line-number-utils.insert-default-sequential-line-number(s)-at-cursor(s)",
+        "title": "Line Number Utils: Insert Default Sequential Line Number(s) at Cursor(s) (1, 2, 3)"
       }
     ],
     "keybindings": [
@@ -37,6 +45,11 @@
       {
         "command": "vscode-line-number-utils.insert-line-number(s)-at-cursor(s)",
         "key": "ctrl+shift+alt+i",
+        "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
+      },
+      {
+        "command": "vscode-line-number-utils.insert-default-sequential-line-number(s)-at-cursor(s)",
+        "key": "ctrl+shift+alt+d",
         "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
       }
     ]

@@ -44,6 +44,25 @@ export const insertLineNumbers = (editor?: TextEditor) => {
   });
 };
 
+export const insertSequentialLineNumbers = (
+  editor?: TextEditor,
+  start?: number,
+  step?: number
+) => {
+  if (!editor || !editor.selections || editor.selections.length === 0) {
+    return;
+  }
+  let index = start ?? 0;
+  let increment = step ?? 1;
+  const selections = editor.selections;
+  editor.edit((editBuilder) => {
+    selections.forEach((selection) => {
+      editBuilder.insert(selection.active, index?.toString());
+      index = index + increment;
+    });
+  });
+};
+
 export type ExecuteCommand = typeof commands.executeCommand;
 
 export const insertCursorsAtWord = async (
