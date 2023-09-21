@@ -57,4 +57,4 @@ jobs:
       - name: Publish to VSCode Marketplace
         env:
           VSCE_PUBLISHER_TOKEN: ${{ secrets.VSCE_PUBLISHER_TOKEN }}
-        run: npm run vsce-publish-minor -- -p $VSCE_PUBLISHER_TOKEN
+        run: npm run vsce-publish:minor -- -p $VSCE_PUBLISHER_TOKEN
