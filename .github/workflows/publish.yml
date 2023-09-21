@@ -37,6 +37,8 @@ jobs:
         run: npm run pretest
       - name: Run tests
         run: npm test
+        env:
+          DISPLAY: ':99.0'
 
   publish:
     needs: [build, test]
