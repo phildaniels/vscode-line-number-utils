@@ -55,4 +55,4 @@ jobs:
       - name: Package For Marketplace
         run: npm run vsce-package
       - name: Publish to VSCode Marketplace
-        run: npm run vsce-publish:ci:minor -- -p ${{ secrets.VSCE_PUBLISHER_TOKEN }}
+        run: npm run vsce-publish:minor -- -p ${{ secrets.VSCE_PUBLISHER_TOKEN }}

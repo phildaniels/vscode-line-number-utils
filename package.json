@@ -52,9 +52,7 @@
     "test": "node ./out/test/runTest.js",
     "vsce-package": "vsce package",
     "vsce-publish:minor": "vsce publish minor",
-    "vsce-publish:ci:minor": "vsce publish minor -p $VSCE_PUBLISHER_TOKEN",
-    "vsce-publish:major": "vsce publish major",
-    "vsce-publish:ci:major": "vsce publish major -p $VSCE_PUBLISHER_TOKEN"
+    "vsce-publish:major": "vsce publish major"
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",
