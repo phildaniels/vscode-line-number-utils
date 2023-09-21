@@ -1,7 +1,7 @@
 name: Build, Test, and Publish VSCode Extension
 on:
   workflow_run:
-    workflows: ['Version Bump'] # This should match the name of your version bump workflow
+    workflows: ['Bump Minor Version']
     types:
       - completed
 jobs:
@@ -58,4 +58,4 @@ jobs:
       - name: Publish to VSCode Marketplace
         env:
           VSCE_PUBLISHER_TOKEN: ${{ secrets.VSCE_PUBLISHER_TOKEN }}
-        run: npm run vsce-publish
+        run: npm run vsce-publish:ci
