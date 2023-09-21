@@ -3,6 +3,7 @@
   "displayName": "vscode-line-number-utils",
   "description": "Shortens preview windows in vscode with very long type names",
   "version": "0.2.0",
+  "publisher": "PhilDanielsIO",
   "repository": {
     "type": "git",
     "url": "https://github.com/phildaniels/vscode-line-number-utils"
