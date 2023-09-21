@@ -1,11 +1,9 @@
 name: Version Major to Main
-
 on:
   workflow_run:
     workflows: ['Bump Major Version']
     types:
       - completed
-
 jobs:
   propagate_to_main:
     runs-on: ubuntu-latest
@@ -13,18 +11,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: lts/*
-
+      - name: Set Git Config
+        run: |
+          git config user.name "Phil Daniels"
+          git config user.email "phil@danielsdev.cloud"
+      - name: Set Git Credentials
+        run: |
+          git config --global credential.helper store
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git fetch
       - name: Propagate version bump to main
         run: |
           git checkout main
           git pull
           git merge ${{ github.sha }} --no-edit
           git push origin main
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
