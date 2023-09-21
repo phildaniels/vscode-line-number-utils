@@ -1,0 +1,30 @@
+name: Version Major to Main
+
+on:
+  workflow_run:
+    workflows: ['Bump Major Version']
+    types:
+      - completed
+
+jobs:
+  propagate_to_main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts/*
+
+      - name: Propagate version bump to main
+        run: |
+          git checkout main
+          git pull
+          git merge ${{ github.sha }} --no-edit
+          git push origin main
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
