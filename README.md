@@ -24,7 +24,7 @@
 </br>
 <div align="center">
   <img
-    src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/assets/showcase.png"
+    src="https://raw.githubusercontent.com/phildaniels/vscode-line-number-utils/main/assets/showcase.gif"
     role="presentation"
 		alt="Showcase of extension"
   />

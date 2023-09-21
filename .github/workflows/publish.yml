@@ -5,43 +5,43 @@ on:
     types:
       - completed
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3.8.1
-  #       with:
-  #         node-version: lts/*
-  #         cache: npm
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version: lts/*
+          cache: npm
 
-  #     - name: Install dependencies
-  #       run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  #     - name: Build the extension
-  #       run: npm run vscode:prepublish
+      - name: Build the extension
+        run: npm run vscode:prepublish
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3.8.1
-  #       with:
-  #         node-version: lts/*
-  #         cache: npm
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - name: Run Pre Test
-  #       run: npm run pretest
-  #     - name: Run Tests
-  #       uses: GabrielBB/xvfb-action@v1.6
-  #       with:
-  #         run: npm test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3.8.1
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Pre Test
+        run: npm run pretest
+      - name: Run Tests
+        uses: GabrielBB/xvfb-action@v1.6
+        with:
+          run: npm test
   publish:
-    # needs: [build, test]
+    needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
