@@ -8,6 +8,10 @@ Format is based on [Keep a Changelog](http://keepachangelog.com/), and this proj
 
 - First official stable release
 
+## [0.13.0] - 2023-09-21
+
+- Pipeline work
+
 ## [0.12.0] - 2023-09-21
 
 - Prepping changelog for R1
