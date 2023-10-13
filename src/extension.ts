@@ -10,7 +10,7 @@ import {
 export const activate = (context: ExtensionContext) => {
   console.log('"vscode-line-number-utils" is now active!');
 
-  let copyLineNumbersAtCursorsToClipboard = commands.registerCommand(
+  const copyLineNumbersAtCursorsToClipboard = commands.registerCommand(
     'vscode-line-number-utils.copy-line-number(s)-at-cursor(s)-to-clipboard',
     async () => {
       const lineNumbers = getActiveLineNumbers(window.activeTextEditor);
@@ -30,7 +30,7 @@ export const activate = (context: ExtensionContext) => {
     }
   );
 
-  let insertLineNumbersAtCursors = commands.registerCommand(
+  const insertLineNumbersAtCursors = commands.registerCommand(
     'vscode-line-number-utils.insert-line-number(s)-at-cursor(s)',
     () => {
       if ((window.activeTextEditor?.selections?.length ?? 0) === 0) {
@@ -43,8 +43,8 @@ export const activate = (context: ExtensionContext) => {
     }
   );
 
-  let insertSequentialLineNumbersAtCursors = commands.registerCommand(
-    'vscode-line-number-utils.insert-sequential-line-number(s)-at-cursor(s)',
+  const insertSequentialLineNumbersAtCursors = commands.registerCommand(
+    'vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)',
     async () => {
       const selectionLength = window.activeTextEditor?.selections?.length ?? 0;
       if (selectionLength === 0) {
@@ -56,6 +56,7 @@ export const activate = (context: ExtensionContext) => {
       let startString = await window.showInputBox({
         prompt: 'Enter starting number',
         placeHolder: '1',
+        ignoreFocusOut: true,
       });
       if (Number.isNaN(Number(startString))) {
         window.showErrorMessage(
@@ -77,6 +78,7 @@ export const activate = (context: ExtensionContext) => {
         stepString = await window.showInputBox({
           prompt: 'Enter step',
           placeHolder: '1',
+          ignoreFocusOut: true,
         });
       }
 
@@ -90,8 +92,8 @@ export const activate = (context: ExtensionContext) => {
     }
   );
 
-  let insertDefaultSequentialLineNumbersAtCursors = commands.registerCommand(
-    'vscode-line-number-utils.insert-default-sequential-line-number(s)-at-cursor(s)',
+  const insertDefaultSequentialLineNumbersAtCursors = commands.registerCommand(
+    'vscode-line-number-utils.insert-default-sequential-number(s)-at-cursor(s)',
     async () => {
       const selectionLength = window.activeTextEditor?.selections?.length ?? 0;
       if (selectionLength === 0) {
@@ -104,11 +106,32 @@ export const activate = (context: ExtensionContext) => {
     }
   );
 
+  const generateRandomTextOfSize = (size: number) => {
+    const validChars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+    const textArray = [];
+    for (let i = 0; i < size; i++) {
+      let randomIndex = Math.floor(Math.random() * validChars.length);
+      textArray.push(validChars[randomIndex]);
+    }
+    return textArray.join('');
+  };
+
+  const typeRandomText = commands.registerCommand(
+    'vscode-line-number-utils.typeRandomText',
+    async () => {
+      await commands.executeCommand('type', {
+        text: generateRandomTextOfSize(5),
+      });
+    }
+  );
+
   context.subscriptions.push(
     copyLineNumbersAtCursorsToClipboard,
     insertLineNumbersAtCursors,
     insertSequentialLineNumbersAtCursors,
-    insertDefaultSequentialLineNumbersAtCursors
+    insertDefaultSequentialLineNumbersAtCursors,
+    typeRandomText
   );
 };
 

@@ -28,12 +28,12 @@
         "title": "Line Number Utils: Insert Line Number(s) at Cursor(s)"
       },
       {
-        "command": "vscode-line-number-utils.insert-sequential-line-number(s)-at-cursor(s)",
-        "title": "Line Number Utils: Insert Sequential Line Number(s) at Cursor(s)"
+        "command": "vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)",
+        "title": "Line Number Utils: Insert Sequential Number(s) at Cursor(s)"
       },
       {
-        "command": "vscode-line-number-utils.insert-default-sequential-line-number(s)-at-cursor(s)",
-        "title": "Line Number Utils: Insert Default Sequential Line Number(s) at Cursor(s) (1, 2, 3)"
+        "command": "vscode-line-number-utils.insert-default-sequential-number(s)-at-cursor(s)",
+        "title": "Line Number Utils: Insert Default Sequential Number(s) at Cursor(s) (1, 2, 3)"
       }
     ],
     "keybindings": [
@@ -48,9 +48,13 @@
         "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
       },
       {
-        "command": "vscode-line-number-utils.insert-default-sequential-line-number(s)-at-cursor(s)",
+        "command": "vscode-line-number-utils.insert-default-sequential-number(s)-at-cursor(s)",
         "key": "ctrl+shift+alt+d",
         "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
+      },
+      {
+        "command": "vscode-line-number-utils.typeRandomText",
+        "key": "ctrl+shift+alt+t"
       }
     ]
   },
@@ -60,7 +64,7 @@
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
+    "watch-tests": "tsc -p . --outDir out && tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",

@@ -38,6 +38,9 @@ const waitForDocumentChanges = async (
   });
 };
 
+const sleep = async (timeMs: number) =>
+  new Promise((resolve) => setTimeout(resolve, timeMs));
+
 suite('integration/extension.ts', async () => {
   window.showInformationMessage('Starting integration tests');
   ('/home/phil/personal/vscode-line-number-utils/out/test/data/testFile.ts');
@@ -76,10 +79,58 @@ suite('integration/extension.ts', async () => {
       5000
     );
 
-    const textInEditor = editor.document.getText();
-    const textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
-    const expectedText =
+    let textInEditor = editor.document.getText();
+    let textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
+    let expectedText =
       '"usestrict";console.log(`hello2`);console.log(`world3`);console.log(`it\'sme4`);//#sourceMappingURL=testFile.js.map';
+
+    // expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
+
+    await commands.executeCommand(
+      'vscode-line-number-utils.insert-default-sequential-number(s)-at-cursor(s)'
+    );
+
+    await waitForDocumentChanges(
+      document,
+      workspace.onDidChangeTextDocument,
+      5000
+    );
+
+    textInEditor = editor.document.getText();
+    textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
+    expectedText =
+      '"usestrict";console.log(`hello21`);console.log(`world32`);console.log(`it\'sme43`);//#sourceMappingURL=testFile.js.map';
+
+    // expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
+
+    commands.executeCommand(
+      'vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)'
+    );
+
+    await sleep(4000);
+
+    await commands.executeCommand('workbench.action.focusQuickOpen');
+    await commands.executeCommand('type', { text: '2' });
+    await commands.executeCommand(
+      'workbench.action.acceptSelectedQuickOpenItem'
+    );
+
+    await commands.executeCommand('workbench.action.focusQuickOpen');
+    await commands.executeCommand('type', { text: '3' });
+    await commands.executeCommand(
+      'workbench.action.acceptSelectedQuickOpenItem'
+    );
+
+    await waitForDocumentChanges(
+      document,
+      workspace.onDidChangeTextDocument,
+      5000
+    );
+
+    textInEditor = editor.document.getText();
+    textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
+    expectedText =
+      '"usestrict";console.log(`hello212`);console.log(`world325`);console.log(`it\'sme438`);//#sourceMappingURL=testFile.js.map';
 
     expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
