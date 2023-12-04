@@ -28,11 +28,11 @@ jobs:
         run: |
           git pull
           npm version major
-          git push origin ${{ github.ref }}
+          git push origin ${{ github.ref }} --force
       - name: Merge to Main
         run: |
           git checkout main
           git merge --no-ff ${{ github.ref }}
-          git push origin main
+          git push origin main --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
