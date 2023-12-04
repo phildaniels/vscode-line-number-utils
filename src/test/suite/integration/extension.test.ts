@@ -43,7 +43,6 @@ const sleep = async (timeMs: number) =>
 
 suite('integration/extension.ts', async () => {
   window.showInformationMessage('Starting integration tests');
-  ('/home/phil/personal/vscode-line-number-utils/out/test/data/testFile.ts');
   test('allCommands', async function () {
     const pathToDummyFile = path.resolve(
       __dirname,
@@ -73,59 +72,35 @@ suite('integration/extension.ts', async () => {
       'vscode-line-number-utils.insert-line-number(s)-at-cursor(s)'
     );
 
-    await waitForDocumentChanges(
-      document,
-      workspace.onDidChangeTextDocument,
-      5000
-    );
+    await sleep(5000);
 
     let textInEditor = editor.document.getText();
     let textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
     let expectedText =
       '"usestrict";console.log(`hello2`);console.log(`world3`);console.log(`it\'sme4`);//#sourceMappingURL=testFile.js.map';
 
-    // expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
+    expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
     await commands.executeCommand(
       'vscode-line-number-utils.insert-default-sequential-number(s)-at-cursor(s)'
     );
 
-    await waitForDocumentChanges(
-      document,
-      workspace.onDidChangeTextDocument,
-      5000
-    );
+    await sleep(5000);
 
     textInEditor = editor.document.getText();
     textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
     expectedText =
       '"usestrict";console.log(`hello21`);console.log(`world32`);console.log(`it\'sme43`);//#sourceMappingURL=testFile.js.map';
 
-    // expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
+    expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
-    commands.executeCommand(
-      'vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)'
-    );
-
-    await sleep(4000);
-
-    await commands.executeCommand('workbench.action.focusQuickOpen');
-    await commands.executeCommand('type', { text: '2' });
     await commands.executeCommand(
-      'workbench.action.acceptSelectedQuickOpenItem'
+      'vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)',
+      2,
+      3
     );
 
-    await commands.executeCommand('workbench.action.focusQuickOpen');
-    await commands.executeCommand('type', { text: '3' });
-    await commands.executeCommand(
-      'workbench.action.acceptSelectedQuickOpenItem'
-    );
-
-    await waitForDocumentChanges(
-      document,
-      workspace.onDidChangeTextDocument,
-      5000
-    );
+    await sleep(5000);
 
     textInEditor = editor.document.getText();
     textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');

@@ -45,7 +45,7 @@ export const activate = (context: ExtensionContext) => {
 
   const insertSequentialLineNumbersAtCursors = commands.registerCommand(
     'vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)',
-    async () => {
+    async (...args: any[]) => {
       const selectionLength = window.activeTextEditor?.selections?.length ?? 0;
       if (selectionLength === 0) {
         window.showInformationMessage(
@@ -53,6 +53,14 @@ export const activate = (context: ExtensionContext) => {
         );
         return;
       }
+
+      if (args.length === 2) {
+        const start = Number(args[0]);
+        const step = Number(args[1]);
+        insertSequentialLineNumbers(window.activeTextEditor, start, step);
+        return;
+      }
+
       let startString = await window.showInputBox({
         prompt: 'Enter starting number',
         placeHolder: '1',
@@ -106,32 +114,11 @@ export const activate = (context: ExtensionContext) => {
     }
   );
 
-  const generateRandomTextOfSize = (size: number) => {
-    const validChars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-    const textArray = [];
-    for (let i = 0; i < size; i++) {
-      let randomIndex = Math.floor(Math.random() * validChars.length);
-      textArray.push(validChars[randomIndex]);
-    }
-    return textArray.join('');
-  };
-
-  const typeRandomText = commands.registerCommand(
-    'vscode-line-number-utils.typeRandomText',
-    async () => {
-      await commands.executeCommand('type', {
-        text: generateRandomTextOfSize(5),
-      });
-    }
-  );
-
   context.subscriptions.push(
     copyLineNumbersAtCursorsToClipboard,
     insertLineNumbersAtCursors,
     insertSequentialLineNumbersAtCursors,
-    insertDefaultSequentialLineNumbersAtCursors,
-    typeRandomText
+    insertDefaultSequentialLineNumbersAtCursors
   );
 };
 
