@@ -110,7 +110,7 @@ export const activate = (context: ExtensionContext) => {
         );
         return;
       }
-      insertSequentialLineNumbers(window.activeTextEditor, 1, 1);
+      insertSequentialLineNumbers(window.activeTextEditor, 0, 1);
     }
   );
 

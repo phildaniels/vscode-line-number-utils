@@ -53,8 +53,9 @@
         "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
       },
       {
-        "command": "vscode-line-number-utils.typeRandomText",
-        "key": "ctrl+shift+alt+t"
+        "command": "vscode-line-number-utils.insert-sequential-number(s)-at-cursor(s)",
+        "key": "ctrl+shift+alt+q",
+        "when": "editorFocus && !editorReadonly && (editorHasSelection || editorHasMultipleSelections || editorTextFocus)"
       }
     ]
   },

@@ -90,7 +90,7 @@ suite('integration/extension.ts', async () => {
     textInEditor = editor.document.getText();
     textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
     expectedText =
-      '"usestrict";console.log(`hello21`);console.log(`world32`);console.log(`it\'sme43`);//#sourceMappingURL=testFile.js.map';
+      '"usestrict";console.log(`hello20`);console.log(`world31`);console.log(`it\'sme42`);//#sourceMappingURL=testFile.js.map';
 
     expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
@@ -105,7 +105,7 @@ suite('integration/extension.ts', async () => {
     textInEditor = editor.document.getText();
     textInEditorRemovingWhiteSpace = textInEditor.replace(/\s/g, '');
     expectedText =
-      '"usestrict";console.log(`hello212`);console.log(`world325`);console.log(`it\'sme438`);//#sourceMappingURL=testFile.js.map';
+      '"usestrict";console.log(`hello202`);console.log(`world315`);console.log(`it\'sme428`);//#sourceMappingURL=testFile.js.map';
 
     expect(textInEditorRemovingWhiteSpace).to.deep.equal(expectedText);
 
